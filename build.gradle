@@ -1,0 +1,54 @@
+
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 17
+targetCompatibility = 17
+
+group = 'net.unicon'
+version = project.version
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://build.shibboleth.net/nexus/content/repositories/releases" }
+    maven { url "https://build.shibboleth.net/nexus/content/repositories/thirdparty" }
+}
+
+test.onlyIf { !Boolean.getBoolean('skip.tests') }
+
+configurations {
+    provided
+    compile.extendsFrom provided
+}
+configurations.implementation.transitive = false
+
+dependencies {
+    compileOnly "jakarta.servlet:jakarta.servlet-api:$project.servletVersion"
+    compileOnly "net.shibboleth.idp:idp-saml-api:$project.shibIdpVersion"
+    compileOnly "org.apache.commons:commons-lang3:$project.commonLangVersion"
+    implementation "net.spy:spymemcached:$project.spyMemCacheVersion"
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
+    implementation 'org.apache.xmlbeans:xmlbeans:5.2.1'
+    implementation 'org.opensaml:opensaml-storage-impl:4.2.0'
+    
+    
+    compileOnly "jakarta.servlet:jakarta.servlet-api:$project.servletVersion"
+    compileOnly "net.shibboleth.idp:idp-authn-api:$project.shibIdpVersion"
+    compileOnly "net.shibboleth.idp:idp-saml-api:$project.shibIdpVersion"
+    compileOnly "org.apache.commons:commons-lang3:$project.commonLangVersion"
+    
+    
+    testImplementation "junit:junit:$project.junitVersion"
+}
+
+// Apply a specific Java toolchain to ease working on different environments.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+test {
+    jvmArgs "--add-opens", "java.base/java.lang=ALL-UNNAMED", "--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED"
+}
