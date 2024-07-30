@@ -1,6 +1,6 @@
 # AttributeToMemcacheAction
 
-To add to gobal.xml
+To add to conf/gobal.xml
 ```xml
 ```<bean id="shibboleth.MemcachedStorageService"
           class="org.opensaml.storage.impl.memcached.MemcachedStorageService"
@@ -24,21 +24,59 @@ To add to gobal.xml
 
     <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
     
-    <bean p:id="intercept/AttributeToMemcacheAction" parent="shibboleth.InterceptFlow" />
+    <bean p:id="intercept/AttributeToMemcache" parent="shibboleth.InterceptFlow" />
 ```
 ```
 
 
-Add to profile-intercept.xml
+Add to /conf/intercept/profile-intercept.xml
 ```xml
 ```
     <bean id="shibboleth.AvailableInterceptFlows" parent="shibboleth.DefaultInterceptFlows" lazy-init="true">
         <property name="sourceList">
             <list merge="true">
 
-                <bean id="intercept/AttributeToMemcacheAction" parent="shibboleth.InterceptFlow" />
+                <bean id="intercept/AttributeToMemcache" parent="shibboleth.InterceptFlow" />
             </list>
         </property>
     </bean>
+```
+```
+
+
+add to /flows/intercept/AttributeToMemcache/AttributeToMemcache-beans.xml
+```xml
+```<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+       <bean id="AttributeToMemcacheAction"
+          class="net.unicon.idp.AttributeToMemcacheAction">
+        <property name="keyName" value="eduPersonPrincipalName" />
+        <property name="memcachedStorageService" ref="shibboleth.MemcachedStorageService"/>
+        <property name="objectMapper" ref="objectMapper"/>
+    </bean>
+</beans>
+```
+```
+
+add to /flows/intercept/AttributeToMemcache/AttributeToMemcache-flow.xml
+```xml
+```<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd"
+      parent="intercept.abstract">
+
+    <decision-state id="CheckContext">
+        <if test="AttributeToMemcacheAction.test(opensamlProfileRequestContext)"
+            then="proceed" else="Error" />
+    </decision-state>
+
+    <bean-import resource="AttributeToMemcache-beans.xml" />
+
+</flow>
 ```
 ```
