@@ -5,7 +5,6 @@ package org.example;
 
 import org.junit.Test;
 
-import net.unicon.idp.AttributeToMemcacheAction;
 
 import static org.junit.Assert.*;
 
