@@ -24,21 +24,21 @@ To add to gobal.xml
 
     <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
     
-    <bean id="AttributeToMemcacheAction" class="net.unicon.idp.AttributeToMemcacheAction">
-        <constructor-arg ref="shibboleth.MemcachedStorageService" />
-        <constructor-arg ref="objectMapper" />
-        <constructor-arg name="keyName" value="eduPersonPrincipalName" />
-    </bean>
+    <bean p:id="intercept/AttributeToMemcacheAction" parent="shibboleth.InterceptFlow" />
 ```
 ```
 
 
-Add to intercept-events-flow.xml
+Add to profile-intercept.xml
 ```xml
-```<global-transitions>
-        <transition on="AttributeToMemcacheAction" to="AttributeToMemcacheAction" />
-		<transition on="proceed" to="proceed"/>
-		<transition on="error" to="error"/>
-    </global-transitions>
+```
+    <bean id="shibboleth.AvailableInterceptFlows" parent="shibboleth.DefaultInterceptFlows" lazy-init="true">
+        <property name="sourceList">
+            <list merge="true">
+
+                <bean id="intercept/AttributeToMemcacheAction" parent="shibboleth.InterceptFlow" />
+            </list>
+        </property>
+    </bean>
 ```
 ```
