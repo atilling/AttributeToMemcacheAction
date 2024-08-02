@@ -38,7 +38,7 @@ public class AttributeToMemcacheService implements Predicate<ProfileRequestConte
     
     @Override
     public boolean test(@Nullable ProfileRequestContext profileRequestContext)  {
-    	
+    	/*
     	log.debug ("Starting save of attributes");
     	
     	String idKey = "default";
@@ -66,7 +66,7 @@ public class AttributeToMemcacheService implements Predicate<ProfileRequestConte
         } catch (Exception e) {
             return false;
         }
-
+		*/
         return true;
     }
 }
