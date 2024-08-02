@@ -5,10 +5,10 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     
-       <bean id="AttributeToMemcacheAction"
-          class="net.unicon.idp.AttributeToMemcacheAction">
-        <property name="keyName" value="eduPersonPrincipalName" />
-        <property name="memcachedStorageService" ref="shibboleth.MemcachedStorageService"/>
-        <property name="objectMapper" ref="objectMapper"/>
-    </bean>
+  <bean id="AttributeToMemcacheAction"
+      class="net.unicon.idp.AttributeToMemcacheAction">
+    <property name="memcachedStorageService" ref="shibboleth.MemcachedStorageService"/>
+    <property name="objectMapper" ref="objectMapper"/>
+    <property name="keyName" value="eduPersonPrincipalName" />
+  </bean>
 </beans>

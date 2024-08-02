@@ -12,18 +12,9 @@
        default-init-method="initialize"
        default-destroy-method="destroy">
 
-    <!--
-    Intercept flows are used at various injection points to modify processing. This is the master list
-    of flows available, but flows are enabled by specifying them in various profile configuration beans
-    via relying-party.xml 
-    
-    This list of flows is merged with a built-in set defined in a system configuration file, and may be
-    empty, but should not be removed.
-    -->
     <bean id="shibboleth.AvailableInterceptFlows" parent="shibboleth.DefaultInterceptFlows" lazy-init="true">
         <property name="sourceList">
             <list merge="true">
-
                 <bean id="intercept/AttributeToMemcache" parent="shibboleth.InterceptFlow" />
             </list>
         </property>

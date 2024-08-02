@@ -1,7 +1,5 @@
 package net.unicon.idp;
 
-import org.opensaml.profile.action.ActionSupport;
-import org.opensaml.profile.action.EventIds;
 import org.opensaml.profile.context.ProfileRequestContext;
 
 import org.opensaml.storage.impl.memcached.MemcachedStorageService;
@@ -15,13 +13,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 import java.util.HashMap;
-import java.util.function.Function;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.security.Principal;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.security.auth.Subject;
 
@@ -49,7 +43,7 @@ public class AttributeToMemcacheAction implements Predicate<ProfileRequestContex
     	
     	String idKey = "default";
     	
-    	Map<String, Object> attributes=new HashMap();
+    	Map<String, Object> attributes=new HashMap<String, Object>();
     	SubjectContext subjectContext = profileRequestContext.getSubcontext(SubjectContext.class);
         Subject subject = subjectContext.getSubjects().get(0);
         Set<IdPAttributePrincipal> principals = subject.getPrincipals(IdPAttributePrincipal.class);
