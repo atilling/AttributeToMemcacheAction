@@ -4,7 +4,7 @@
       parent="intercept.abstract">
 
     <decision-state id="CheckContext">
-        <if test="AttributeToMemcacheAction.test(opensamlProfileRequestContext)"
+        <if test="AttributeToMemcacheService.test(opensamlProfileRequestContext)"
             then="proceed" else="Error" />
     </decision-state>
 

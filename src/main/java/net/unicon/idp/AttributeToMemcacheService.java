@@ -22,15 +22,15 @@ import javax.security.auth.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AttributeToMemcacheAction implements Predicate<ProfileRequestContext>  {
+public class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
 	
-	private static final Logger log = LoggerFactory.getLogger(AttributeToMemcacheAction.class);
+	private static final Logger log = LoggerFactory.getLogger(AttributeToMemcacheService.class);
 
     private MemcachedStorageService memcachedStorageService;
     private final ObjectMapper objectMapper;
     private String keyName;
     
-    public AttributeToMemcacheAction(MemcachedStorageService memcachedStorageService, ObjectMapper objectMapper, String keyName) throws Exception {
+    public AttributeToMemcacheService(MemcachedStorageService memcachedStorageService, ObjectMapper objectMapper, String keyName) throws Exception {
     	this.memcachedStorageService = memcachedStorageService;
         this.objectMapper = objectMapper;
     	this.keyName = keyName;
