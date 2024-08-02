@@ -1,4 +1,4 @@
-# AttributeToMemcacheAction
+# AttributeToMemcacheService
 
 To add to conf/gobal.xml
 ```xml
@@ -53,8 +53,8 @@ add to /flows/intercept/AttributeToMemcache/AttributeToMemcache-beans.xml
        xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     
-       <bean id="AttributeToMemcacheAction"
-          class="net.unicon.idp.AttributeToMemcacheAction">
+       <bean id="AttributeToMemcacheService"
+          class="net.unicon.idp.AttributeToMemcacheService">
         <property name="keyName" value="eduPersonPrincipalName" />
         <property name="memcachedStorageService" ref="shibboleth.MemcachedStorageService"/>
         <property name="objectMapper" ref="objectMapper"/>
@@ -71,7 +71,7 @@ add to /flows/intercept/AttributeToMemcache/AttributeToMemcache-flow.xml
       parent="intercept.abstract">
 
     <decision-state id="CheckContext">
-        <if test="AttributeToMemcacheAction.test(opensamlProfileRequestContext)"
+        <if test="AttributeToMemcacheService.test(opensamlProfileRequestContext)"
             then="proceed" else="Error" />
     </decision-state>
 
