@@ -24,20 +24,19 @@ configurations {
 configurations.implementation.transitive = false
 
 dependencies {
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.0.1"
+    implementation "org.apache.xmlbeans:xmlbeans:5.2.1"
+    implementation "org.opensaml:opensaml-saml-api:5.1.2"
+    implementation "org.opensaml:opensaml-profile-impl:4.0.1"
+    implementation "org.opensaml:opensaml-storage-impl:4.2.0"
+    
+    implementation "net.shibboleth.idp:idp-profile-api:${project.'shibIdpVersion'}"
+    
     compileOnly "jakarta.servlet:jakarta.servlet-api:$project.servletVersion"
-    compileOnly "net.shibboleth.idp:idp-saml-api:$project.shibIdpVersion"
     compileOnly "org.apache.commons:commons-lang3:$project.commonLangVersion"
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
-    implementation 'org.apache.xmlbeans:xmlbeans:5.2.1'
     
-    implementation 'org.opensaml:opensaml-saml-api:5.1.2'
-    implementation 'org.opensaml:opensaml-profile-impl:4.0.1'
-    implementation 'org.opensaml:opensaml-storage-impl:4.2.0'
-    
-    compileOnly "jakarta.servlet:jakarta.servlet-api:$project.servletVersion"
     compileOnly "net.shibboleth.idp:idp-authn-api:$project.shibIdpVersion"
     compileOnly "net.shibboleth.idp:idp-saml-api:$project.shibIdpVersion"
-    compileOnly "org.apache.commons:commons-lang3:$project.commonLangVersion"
     
     
     testImplementation "junit:junit:$project.junitVersion"

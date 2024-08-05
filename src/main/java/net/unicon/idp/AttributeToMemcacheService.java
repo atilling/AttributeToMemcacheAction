@@ -7,11 +7,11 @@ import org.opensaml.storage.impl.memcached.MemcachedStorageService;
 import net.shibboleth.idp.authn.context.SubjectContext;
 import net.shibboleth.idp.authn.principal.IdPAttributePrincipal;
 import net.shibboleth.idp.attribute.IdPAttribute;
-import net.shibboleth.utilities.java.support.logic.Predicate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
+import java.util.function.Predicate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -22,27 +22,26 @@ import javax.security.auth.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
+class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
 	
 	private static final Logger log = LoggerFactory.getLogger(AttributeToMemcacheService.class);
-    /*
+    
     private MemcachedStorageService memcachedStorageService;
     private final ObjectMapper objectMapper;
     private String keyName;
-    */
+    
 	
-    public AttributeToMemcacheService () throws Exception {}
-
-    /*(MemcachedStorageService memcachedStorageService, ObjectMapper objectMapper, String keyName) throws Exception {
+	
+    public AttributeToMemcacheService (MemcachedStorageService memcachedStorageService, ObjectMapper objectMapper, String keyName) throws Exception {
     	this.memcachedStorageService = memcachedStorageService;
         this.objectMapper = objectMapper;
     	this.keyName = keyName;
     }
-    */
+    
     
     @Override
-    public boolean test(@Nullable ProfileRequestContext profileRequestContext)  {
-    	/*
+    public boolean test(@Nullable ProfileRequestContext profileRequestContext) {
+    	
     	log.debug ("Starting save of attributes");
     	
     	String idKey = "default";
@@ -55,6 +54,7 @@ public class AttributeToMemcacheService implements Predicate<ProfileRequestConte
         	IdPAttribute attribute = principal.getAttribute();
         	log.debug("Add attribute: "+ attribute.getId());
         	if (attribute.getId().equals(keyName)) {
+        		log.debug("key attribute value: "+ attribute.getValues().get(0).toString());
         		idKey=attribute.getValues().get(0).toString();
         	}
         	attributes.put(attribute.getId(),attribute.getValues());
@@ -70,7 +70,7 @@ public class AttributeToMemcacheService implements Predicate<ProfileRequestConte
         } catch (Exception e) {
             return false;
         }
-		*/
+		
         return true;
     }
 }
