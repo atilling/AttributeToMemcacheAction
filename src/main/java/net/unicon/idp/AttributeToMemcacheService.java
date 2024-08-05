@@ -25,16 +25,20 @@ import org.slf4j.LoggerFactory;
 public class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
 	
 	private static final Logger log = LoggerFactory.getLogger(AttributeToMemcacheService.class);
-
+    /*
     private MemcachedStorageService memcachedStorageService;
     private final ObjectMapper objectMapper;
     private String keyName;
-    
-    public AttributeToMemcacheService(MemcachedStorageService memcachedStorageService, ObjectMapper objectMapper, String keyName) throws Exception {
+    */
+	
+    public AttributeToMemcacheService () throws Exception {}
+
+    /*(MemcachedStorageService memcachedStorageService, ObjectMapper objectMapper, String keyName) throws Exception {
     	this.memcachedStorageService = memcachedStorageService;
         this.objectMapper = objectMapper;
     	this.keyName = keyName;
     }
+    */
     
     @Override
     public boolean test(@Nullable ProfileRequestContext profileRequestContext)  {

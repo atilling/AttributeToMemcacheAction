@@ -7,8 +7,10 @@
     
   <bean id="AttributeToMemcacheService"
       class="net.unicon.idp.AttributeToMemcacheService">
+    <!--   
     <property name="memcachedStorageService" ref="shibboleth.MemcachedStorageService"/>
     <property name="objectMapper" ref="objectMapper"/>
     <property name="keyName" value="eduPersonPrincipalName" />
+     -->
   </bean>
 </beans>
