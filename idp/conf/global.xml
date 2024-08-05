@@ -76,4 +76,13 @@
     <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
   
     <bean p:id="intercept/AttributeToMemcache" parent="shibboleth.InterceptFlow" />
+    
+    <bean id="AttributeToMemcacheService"
+      class="net.unicon.idp.AttributeToMemcacheService">
+	    <!--   
+	    <property name="memcachedStorageService" ref="shibboleth.MemcachedStorageService"/>
+	    <property name="objectMapper" ref="objectMapper"/>
+	    <property name="keyName" value="eduPersonPrincipalName" />
+	     -->
+	  </bean>
 </beans>
