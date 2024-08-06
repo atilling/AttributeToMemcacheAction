@@ -64,6 +64,8 @@ class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
         try {
         	
         	String jsonString = objectMapper.writeValueAsString(attributes);
+        	
+        	log.debug("jsonstring: " + jsonString);
         	 
         	memcachedStorageService.create("Attribs",idKey,jsonString,(long)3600);
         	
