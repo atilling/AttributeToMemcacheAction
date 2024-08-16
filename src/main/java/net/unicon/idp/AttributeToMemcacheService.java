@@ -35,7 +35,7 @@ class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
 	
 	
     public AttributeToMemcacheService (String server, int port, ObjectMapper objectMapper, String keyName) {
-    	/*
+
 	    try {
 	    	this.server = server;
 	    	this.port = port;
@@ -45,7 +45,6 @@ class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
     	} catch (Exception e) {
     		log.error("Error thrown: " + e.getMessage());
     	}
-    	*/
     }
     
     
