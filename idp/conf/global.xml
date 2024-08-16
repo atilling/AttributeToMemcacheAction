@@ -51,10 +51,7 @@
         <entry key="foo" value="bar"/>
     </util:map>
     -->
-     <bean id="shibboleth.authn.External.externalAuthnPath" class="java.lang.String"
-        c:_0="contextRelative:Authn/External" />  
     
-    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
   
     <bean p:id="intercept/AttributeToMemcache" parent="shibboleth.InterceptFlow" />
     
