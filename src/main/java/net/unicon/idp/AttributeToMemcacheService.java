@@ -35,11 +35,16 @@ class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
 	
 	
     public AttributeToMemcacheService (String server, int port, ObjectMapper objectMapper, String keyName) throws Exception {
-    	this.server = server;
-    	this.port = port;
-        this.objectMapper = objectMapper;
-    	this.keyName = keyName;
-    	this.memcachedClient=new MemcachedClient(new InetSocketAddress(server,port));
+    	
+	    	this.server = server;
+	    	this.port = port;
+	        this.objectMapper = objectMapper;
+	    	this.keyName = keyName;
+	    try {
+	    	this.memcachedClient=new MemcachedClient(new InetSocketAddress(server,port));
+    	} catch (Exception e) {
+    		log.error("Error thrown: " + e.getMessage());
+    	}
     }
     
     
@@ -70,8 +75,6 @@ class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
         	String jsonString = objectMapper.writeValueAsString(attributes);
         	
         	log.debug("jsonstring: " + jsonString);
-        	 
-        	//memcachedStorageService.create("Attribs",idKey,jsonString,(long)3600);
         	this.memcachedClient.add(idKey,3600,jsonString);
         	
         } catch (Exception e) {
