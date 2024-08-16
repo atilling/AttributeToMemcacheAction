@@ -27,21 +27,21 @@ class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
 	private static final Logger log = LoggerFactory.getLogger(AttributeToMemcacheService.class);
     
 	private MemcachedClient memcachedClient;
-    private String server;
-    private int port;
-    private final ObjectMapper objectMapper;
-    private String keyName;
+    private String server="127.0.0.1";
+    private int port=11211;
+    private ObjectMapper objectMapper = new ObjectMapper();
+    private String keyName="eduPersonPrincipalName";
     
 	
 	
-    public AttributeToMemcacheService (String server, int port, ObjectMapper objectMapper, String keyName) throws Exception {
-    	
+    public AttributeToMemcacheService (String server, int port, ObjectMapper objectMapper, String keyName) {
+
+	    try {
 	    	this.server = server;
 	    	this.port = port;
 	        this.objectMapper = objectMapper;
 	    	this.keyName = keyName;
-	    try {
-	    	this.memcachedClient=new MemcachedClient(new InetSocketAddress(server,port));
+	    	this.memcachedClient=new MemcachedClient(new InetSocketAddress(this.server,this.port));
     	} catch (Exception e) {
     		log.error("Error thrown: " + e.getMessage());
     	}
@@ -54,21 +54,26 @@ class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
     	log.debug ("Starting save of attributes");
     	
     	String idKey = "default";
-    	
+
     	Map<String, Object> attributes=new HashMap<String, Object>();
-    	SubjectContext subjectContext = profileRequestContext.getSubcontext(SubjectContext.class);
-        Subject subject = subjectContext.getSubjects().get(0);
-        Set<IdPAttributePrincipal> principals = subject.getPrincipals(IdPAttributePrincipal.class);
-        for (IdPAttributePrincipal principal:principals) {
-        	IdPAttribute attribute = principal.getAttribute();
-        	log.debug("Add attribute: "+ attribute.getId());
-        	if (attribute.getId().equals(keyName)) {
-        		log.debug("key attribute value: "+ attribute.getValues().get(0).toString());
-        		idKey=attribute.getValues().get(0).toString();
-        	}
-        	attributes.put(attribute.getId(),attribute.getValues());
+    	
+    	try {
+	    	SubjectContext subjectContext = profileRequestContext.getSubcontext(SubjectContext.class);
+	        Subject subject = subjectContext.getSubjects().get(0);
+	        Set<IdPAttributePrincipal> principals = subject.getPrincipals(IdPAttributePrincipal.class);
+	        for (IdPAttributePrincipal principal:principals) {
+	        	IdPAttribute attribute = principal.getAttribute();
+	        	log.debug("Add attribute: "+ attribute.getId());
+	        	if (attribute.getId().equals(keyName)) {
+	        		log.debug("key attribute value: "+ attribute.getValues().get(0).toString());
+	        		idKey=attribute.getValues().get(0).toString();
+	        	}
+	        	attributes.put(attribute.getId(),attribute.getValues());
         }
-        
+    	} catch (Exception e) {
+        	log.warn("Error thrown: " + e.getMessage());
+            return false;
+        }
 
         try {
         	
@@ -78,6 +83,7 @@ class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
         	this.memcachedClient.add(idKey,3600,jsonString);
         	
         } catch (Exception e) {
+        	log.warn("Error thrown: " + e.getMessage());
             return false;
         }
 		
