@@ -2,22 +2,22 @@ package net.unicon.idp;
 
 import org.opensaml.profile.context.ProfileRequestContext;
 
-import org.opensaml.storage.impl.memcached.MemcachedStorageService;
-
 import net.shibboleth.idp.authn.context.SubjectContext;
 import net.shibboleth.idp.authn.principal.IdPAttributePrincipal;
 import net.shibboleth.idp.attribute.IdPAttribute;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 import java.util.function.Predicate;
 import java.util.HashMap;
+import java.net.InetSocketAddress;
 import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nullable;
 import javax.security.auth.Subject;
+
+import net.spy.memcached.MemcachedClient;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,16 +26,20 @@ class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
 	
 	private static final Logger log = LoggerFactory.getLogger(AttributeToMemcacheService.class);
     
-    private MemcachedStorageService memcachedStorageService;
+	private MemcachedClient memcachedClient;
+    private String server;
+    private int port;
     private final ObjectMapper objectMapper;
     private String keyName;
     
 	
 	
-    public AttributeToMemcacheService (MemcachedStorageService memcachedStorageService, ObjectMapper objectMapper, String keyName) throws Exception {
-    	this.memcachedStorageService = memcachedStorageService;
+    public AttributeToMemcacheService (String server, int port, ObjectMapper objectMapper, String keyName) throws Exception {
+    	this.server = server;
+    	this.port = port;
         this.objectMapper = objectMapper;
     	this.keyName = keyName;
+    	this.memcachedClient=new MemcachedClient(new InetSocketAddress(server,port));
     }
     
     
@@ -67,7 +71,8 @@ class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
         	
         	log.debug("jsonstring: " + jsonString);
         	 
-        	memcachedStorageService.create("Attribs",idKey,jsonString,(long)3600);
+        	//memcachedStorageService.create("Attribs",idKey,jsonString,(long)3600);
+        	this.memcachedClient.add(idKey,3600,jsonString);
         	
         } catch (Exception e) {
             return false;

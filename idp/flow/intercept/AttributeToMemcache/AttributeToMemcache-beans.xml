@@ -17,7 +17,8 @@
   </bean>
   -->
  <bean id="AttributeToMemcacheService" class="net.unicon.idp.AttributeToMemcacheService"
-	c_0:memcachedStorageService-ref="shibboleth.MemcachedStorageService"
-	c_1:objectMapper-ref="shibboleth.JSONObjectMapper"
-	c_2:keyName="eduPersonPrincipalName"/>
+	c_0:server="127.0.0.1"
+	c_1:port="11211"
+	c_2:objectMapper-ref="shibboleth.JSONObjectMapper"
+	c_3:keyName="eduPersonPrincipalName"/>
 </beans>

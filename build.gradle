@@ -29,6 +29,7 @@ dependencies {
     implementation "org.opensaml:opensaml-saml-api:5.1.2"
     implementation "org.opensaml:opensaml-profile-impl:4.0.1"
     implementation "org.opensaml:opensaml-storage-impl:4.2.0"
+    implementation "net.spy:spymemcached:$project.spyMemCacheVersion"
     
     implementation "net.shibboleth.idp:idp-profile-api:${project.'shibIdpVersion'}"
     
