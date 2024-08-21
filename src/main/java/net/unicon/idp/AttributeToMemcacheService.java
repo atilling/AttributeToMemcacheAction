@@ -50,7 +50,6 @@ class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
     
     @Override
     public boolean test(@Nullable ProfileRequestContext profileRequestContext) {
-    	/*
     	log.debug ("Starting save of attributes");
     	
     	String idKey = "default";
@@ -74,7 +73,7 @@ class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
         	log.warn("Error thrown: " + e.getMessage());
             return false;
         }
-
+		/* 
         try {
         	
         	String jsonString = objectMapper.writeValueAsString(attributes);
