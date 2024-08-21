@@ -5,6 +5,8 @@ import org.opensaml.profile.context.ProfileRequestContext;
 import net.shibboleth.idp.authn.context.SubjectContext;
 import net.shibboleth.idp.authn.principal.IdPAttributePrincipal;
 import net.shibboleth.idp.attribute.IdPAttribute;
+import net.shibboleth.idp.attribute.IdPAttributeValue;
+import net.shibboleth.idp.attribute.StringAttributeValue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -65,7 +67,10 @@ class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
 	        	log.debug("Add attribute: "+ attribute.getId());
 	        	if (attribute.getId().equals(keyName)) {
 	        		log.debug("key attribute value: "+ attribute.getValues().get(0).toString());
-	        		idKey=attribute.getValues().get(0).toString();
+
+					StringAttributeValue value = (StringAttributeValue)attribute.getValues().get(0);
+
+	        		idKey=value.getValue();
 	        	}
 	        	attributes.put(attribute.getId(),attribute.getValues());
         }
