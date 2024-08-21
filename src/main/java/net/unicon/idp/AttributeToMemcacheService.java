@@ -73,19 +73,17 @@ class AttributeToMemcacheService implements Predicate<ProfileRequestContext>  {
         	log.warn("Error thrown: " + e.getMessage());
             return false;
         }
-		/* 
         try {
         	
         	String jsonString = objectMapper.writeValueAsString(attributes);
         	
         	log.debug("jsonstring: " + jsonString);
-        	this.memcachedClient.add(idKey,3600,jsonString);
+        	Object temp = this.memcachedClient.add(idKey,3600,jsonString);
         	
         } catch (Exception e) {
         	log.warn("Error thrown: " + e.getMessage());
             return false;
         }
-		*/
         return true;
     }
 }
